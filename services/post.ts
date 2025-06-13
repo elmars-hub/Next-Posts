@@ -4,6 +4,7 @@ export type Post = {
   id: number;
   title: string;
   body: string;
+  userId: number;
 };
 
 const API_URL = "https://jsonplaceholder.typicode.com/posts";
