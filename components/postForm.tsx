@@ -2,13 +2,14 @@
 
 import { FormEvent, useState, useEffect } from "react";
 import { Post, createPost, updatePost } from "@/services/post";
+import { SetState } from "@/types";
 
 type Props = {
   userId: number;
   posts: Post[];
-  setPosts: React.Dispatch<React.SetStateAction<Post[]>>;
+  setPosts: SetState<Post[]>;
   selectedPost: Post | null;
-  setSelectedPost: React.Dispatch<React.SetStateAction<Post | null>>;
+  setSelectedPost: SetState<Post | null>;
 };
 
 export function PostForm({

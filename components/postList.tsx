@@ -1,11 +1,12 @@
 "use client";
 
 import { Post, deletePost } from "../services/post";
+import { SetState } from "@/types";
 
 type Props = {
   posts: Post[];
-  setPosts: React.Dispatch<React.SetStateAction<Post[]>>;
-  setSelectedPost: React.Dispatch<React.SetStateAction<Post | null>>;
+  setPosts: SetState<Post[]>;
+  setSelectedPost: SetState<Post | null>;
 };
 
 export function PostList({ posts, setPosts, setSelectedPost }: Props) {
