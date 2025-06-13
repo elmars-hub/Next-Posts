@@ -1,7 +1,7 @@
 "use client";
 
-import PostForm from "@/components/postForm";
-import PostList from "@/components/postList";
+import { PostForm } from "@/components/postForm";
+import { PostList } from "@/components/postList";
 import { Post, getPosts } from "@/services/post";
 import { useEffect, useState } from "react";
 
