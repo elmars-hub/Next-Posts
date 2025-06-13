@@ -1,5 +1,6 @@
 "use client";
 
+import { savePostsToLocal } from "@/services/local";
 import { Post, deletePost } from "../services/post";
 import { SetState } from "@/types";
 
@@ -13,7 +14,9 @@ export function PostList({ posts, setPosts, setSelectedPost }: Props) {
   const handleDelete = async (id: number) => {
     try {
       await deletePost(id);
-      setPosts(posts.filter((post) => post.id !== id));
+      const updated = posts.filter((post) => post.id !== id);
+      setPosts(updated);
+      savePostsToLocal(updated);
     } catch (err) {
       console.error("Failed to delete post", err);
     }

@@ -4,6 +4,7 @@ import { PostForm } from "@/components/postForm";
 import { PostList } from "@/components/postList";
 import { Post, getPosts } from "@/services/post";
 import { useEffect, useState } from "react";
+import { getPostsFromLocal, savePostsToLocal } from "@/services/local";
 
 export default function Home() {
   const [posts, setPosts] = useState<Post[]>([]);
@@ -11,16 +12,20 @@ export default function Home() {
   const [userId] = useState(1);
 
   useEffect(() => {
-    async function load() {
-      const data = await getPosts();
-      if (Array.isArray(data)) {
-        setPosts(data.slice(0, 5));
-      } else {
-        console.error("Data is not an array:", data);
-        setPosts([]);
+    const local = getPostsFromLocal();
+    if (local.length) {
+      setPosts(local);
+    } else {
+      async function load() {
+        const data = await getPosts();
+        if (Array.isArray(data)) {
+          const limited = data.slice(0, 5);
+          setPosts(limited);
+          savePostsToLocal(limited);
+        }
       }
+      load();
     }
-    load();
   }, []);
 
   return (

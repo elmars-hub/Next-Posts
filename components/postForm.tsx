@@ -3,6 +3,7 @@
 import { FormEvent, useState, useEffect } from "react";
 import { Post, createPost, updatePost } from "@/services/post";
 import { SetState } from "@/types";
+import { savePostsToLocal } from "@/services/local";
 
 type Props = {
   userId: number;
@@ -39,11 +40,17 @@ export function PostForm({
           body,
           userId: 0,
         });
-        setPosts(posts.map((p) => (p.id === updated.id ? updated : p)));
+        const updatedPosts = posts.map((p) =>
+          p.id === updated.id ? updated : p
+        );
+        setPosts(updatedPosts);
+        savePostsToLocal(updatedPosts);
         setSuccess("Post updated!");
       } else {
         const created = await createPost({ title, body, userId });
-        setPosts([created, ...posts]);
+        const newPosts = [created, ...posts];
+        setPosts(newPosts);
+        savePostsToLocal(newPosts);
         setSuccess("Post created!");
       }
       setTitle("");
