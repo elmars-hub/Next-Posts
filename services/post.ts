@@ -16,7 +16,10 @@ export const getPosts = async (): Promise<Post[]> => {
 
 export const createPost = async (data: Omit<Post, "id">): Promise<Post> => {
   const res = await axios.post<Post>(API_URL, data);
-  return res.data;
+  return {
+    ...res.data,
+    id: Date.now(),
+  };
 };
 
 export const updatePost = async (
