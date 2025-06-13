@@ -5,3 +5,27 @@ export type Post = {
   title: string;
   body: string;
 };
+
+const API_URL = "https://jsonplaceholder.typicode.com/posts";
+
+export const getPosts = async (): Promise<Post[]> => {
+  const res = await axios.get<Post[]>(API_URL);
+  return res.data;
+};
+
+export const createPost = async (data: Omit<Post, "id">): Promise<Post> => {
+  const res = await axios.post<Post>(API_URL, data);
+  return res.data;
+};
+
+export const updatePost = async (
+  id: number,
+  data: Omit<Post, "id">
+): Promise<Post> => {
+  const res = await axios.put<Post>(`${API_URL}/${id}`, data);
+  return res.data;
+};
+
+export const deletePost = async (id: number): Promise<void> => {
+  const res = await axios.delete<Post>(`${API_URL}/${id}`);
+};
