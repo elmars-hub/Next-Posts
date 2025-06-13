@@ -23,6 +23,11 @@ export const updatePost = async (
   id: number,
   data: Omit<Post, "id">
 ): Promise<Post> => {
+  if (id > 100) {
+    // fake update for local-only posts
+    return { ...data, id, userId: 1 };
+  }
+
   const res = await axios.put<Post>(`${API_URL}/${id}`, data);
   return res.data;
 };
